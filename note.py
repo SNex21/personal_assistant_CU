@@ -40,7 +40,6 @@ def notes_func():
             print('Некорректный ввод Попробуйте снова')
 
 
-# Класс заметки объявляем
 class Note:
     def __init__(self, note_id: int, title: str, content: str, timestamp=None):
         self.id = note_id
@@ -79,7 +78,6 @@ def get_note_by_id(id: int, notes: list) -> dict:
     return None
 
 
-# Далее написаны методы для заметок
 def create_note(notes: list, file):
     note_id = len(notes) + 1
     title = input('Введите заголовок заметки:')
@@ -130,30 +128,32 @@ def edit_note(notes, file):
 
 
 def import_export_notes(notes, file):
-    print('''
-1. Экспорт заметок в CSV
-2. Импорт заметок из CSV
-    ''')
-    choice = input('Выберите действие: ')
+    print(
+        '''
+        1. Экспорт заметок в CSV
+        2. Импорт заметок из CSV
+        '''
+    )
+    choice = input('Выберите действие:')
     if choice == '1':
-        file_name = input('Введите имя файла для экспорта (например, notes.csv): ')
+        file_name = input('Введите имя файла для экспорта (например, notes.csv):')
         export_to_csv([note.to_dict() for note in notes], file_name)
     elif choice == '2':
-        file_name = input('Введите имя файла для импорта (например, notes.csv): ')
+        file_name = input('Введите имя файла для импорта (например, notes.csv):')
         imported_notes = import_from_csv(file_name)
         notes.extend(note_from_dict(note) for note in imported_notes)
         save_data(file, [note.to_dict() for note in notes])
-        print('Заметки успешно импортированы.')
+        print('Заметки успешно импортированы')
     else:
-        print('Некорректный ввод.')
+        print('Некорректный ввод')
 
 
 def delete_note(notes, file):
-    note_id = input('Введите ID заметки для удаления: ')
+    note_id = input('Введите ID заметки для удаления:')
     note = next((note for note in notes if str(note.id) == note_id), None)
     if note:
         notes.remove(note)
         save_data(file, [note.to_dict() for note in notes])
-        print('Заметка удалена.')
+        print('Заметка удалена')
     else:
-        print('Заметка с таким ID не найдена.')
+        print('Заметка с таким ID не найдена')
