@@ -1,5 +1,6 @@
 from note import notes_func
 from task import tasks_func
+from finance import finance_func
 
 def main_menu():
     while True:
@@ -23,7 +24,7 @@ def main_menu():
         elif choice == '3':
             pass
         elif choice == '4':
-            pass
+            finance_func()
         elif choice == '5':
             pass
         elif choice == '6':
