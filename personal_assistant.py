@@ -1,6 +1,9 @@
 from note import notes_func
 from task import tasks_func
 from finance import finance_func
+from contact import contacts_func
+from calculator import calculator
+
 
 def main_menu():
     while True:
@@ -22,16 +25,16 @@ def main_menu():
         elif choice == '2':
             tasks_func()
         elif choice == '3':
-            pass
+            contacts_func()
         elif choice == '4':
             finance_func()
         elif choice == '5':
-            pass
+            calculator()
         elif choice == '6':
             print('ПОКА!')
             break
         else:
-            print('Некорректный ввод. Попробуйте снова.')
+            print('Некорректный ввод Попробуйте снова')
 
 
 if __name__=='__main__':
