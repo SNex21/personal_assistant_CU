@@ -74,7 +74,7 @@ def note_from_dict(data: dict):
 
 def get_note_by_id(id: int, notes: list) -> dict:
     for n in notes:
-        if id == n.get('id'):
+        if int(id) == int(n.id):
             return n
     return None
 

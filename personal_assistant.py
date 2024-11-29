@@ -1,4 +1,5 @@
 from note import notes_func
+from task import tasks_func
 
 def main_menu():
     while True:
@@ -18,7 +19,7 @@ def main_menu():
         if choice == '1':
             notes_func()
         elif choice == '2':
-            pass
+            tasks_func()
         elif choice == '3':
             pass
         elif choice == '4':
@@ -30,7 +31,6 @@ def main_menu():
             break
         else:
             print('Некорректный ввод. Попробуйте снова.')
-
 
 
 if __name__=='__main__':
