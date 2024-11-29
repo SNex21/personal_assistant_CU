@@ -3,6 +3,7 @@ import csv
 import os
 from datetime import datetime
 
+
 def main_menu():
     while True:
         print('''
@@ -31,6 +32,7 @@ def main_menu():
             break
         else:
             print('Некорректный ввод. Попробуйте снова.')
+
 
 
 if __name__=='__main__':
