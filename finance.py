@@ -28,7 +28,7 @@ def finance_func():
         elif choice == '3':
             filter_finance_records(records)
         elif choice == '4':
-            generate_report(records)
+            generate_financial_report(records)
         elif choice == '5':
             calculate_balance(records)
         elif choice == '6':
@@ -39,7 +39,6 @@ def finance_func():
             print('Некорректный ввод. Попробуйте снова.')
 
 
-# Класс финансовой записки объявляем
 class FinanceRecord:
     def __init__(self, 
                  finance_id: int, 
@@ -119,7 +118,7 @@ def filter_finance_records(records):
         date = input('Введите дату (ДД-ММ-ГГГГ):')
 
         filtered = [record for record in records if record.date == date]
-        
+
         print(records[0].date)
     elif choice == '2':
         category = input('Введите категорию:')
@@ -135,25 +134,34 @@ def filter_finance_records(records):
         print('Записи по данному фильтру не найдены')
 
 
-def generate_report(records):
+def generate_financial_report(finance_records):
     start_date = input('Введите начальную дату (ДД-ММ-ГГГГ):')
     end_date = input('Введите конечную дату (ДД-ММ-ГГГГ):')
-    filtered = [
-        record for record in records
-        if start_date <= record.date <= end_date
-    ]
-    if not filtered:
-        print('Нет записей за указанный период')
-        return
 
-    print('--- Отчёт о финансовой активности ---')
-    total_income = sum(record.amount for record in filtered if record.amount > 0)
-    total_expense = sum(record.amount for record in filtered if record.amount < 0)
-    print(f'Общий доход: {total_income}')
-    print(f'Общий расход: {total_expense}')
-    print('Детали:')
-    for record in filtered:
-        print(f'[{record.id}] {record.category} {record.amount} {record.date} {record.description}')
+    try:
+        start_date_obj = datetime.strptime(start_date, '%d-%m-%Y')
+        end_date_obj = datetime.strptime(end_date, '%d-%m-%Y')
+
+        filtered_records = [
+            record for record in finance_records
+            if start_date_obj <= datetime.strptime(record.date, '%d-%m-%Y') <= end_date_obj
+        ]
+
+        income = sum(record.amount for record in filtered_records if record.amount > 0)
+        expenses = sum(record.amount for record in filtered_records if record.amount < 0)
+        balance = income + expenses
+
+        print(f'\nФинансовый отчёт за период с {start_date} по {end_date}:')
+        print(f'- Общий доход: {income:.2f} руб.')
+        print(f'- Общие расходы: {abs(expenses):.2f} руб.')
+        print(f'- Баланс: {balance:.2f} руб.')
+
+        filename = f'report_{start_date}_{end_date}.csv'
+        export_to_csv(filtered_records, filename)
+
+        print(f'Подробная информация сохранена в файле {filename}\n')
+    except ValueError:
+        print('Некорректный формат даты. Используйте ДД-ММ-ГГГГ')
 
 
 def calculate_balance(records):
